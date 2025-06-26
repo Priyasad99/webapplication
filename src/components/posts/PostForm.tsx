@@ -77,7 +77,7 @@ const PostForm = ({
               as={TextField}
               name="title"
               label="Title"
-              error={touched.title && !!errors.title}
+              //error={touched.title && !!errors.title}
               helperText={touched.title && errors.title}
               fullWidth
               margin="normal"
@@ -87,7 +87,7 @@ const PostForm = ({
               as={TextField}
               name="body"
               label="Body"
-              error={touched.body && !!errors.body}
+              // error={touched.body && !!errors.body}
               helperText={touched.body && errors.body}
               fullWidth
               margin="normal"

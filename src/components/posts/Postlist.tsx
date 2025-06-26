@@ -11,7 +11,11 @@ const PostList = () => {
   const [editPostData, setEditPostData] = useState<Post | null>(null);
 
   // Handle delete
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id?: number) => {
+    if (typeof id !== 'number') {
+      console.error('Invalid post id:', id);
+      return;
+    }
     try {
       await deletePost(id).unwrap();
     } catch (error) {
@@ -84,7 +88,7 @@ const PostList = () => {
               {/* Add this flexbox container for the buttons */}
               <Box sx={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between' }}>
                 <Button variant="outlined" onClick={() => handleEditPostClick(post)}>Edit</Button>
-                <Button variant="outlined" color="error" onClick={() => post.id !== undefined && handleDelete(post.id)}>Delete</Button>
+                <Button variant="outlined" color="error" onClick={() => handleDelete(post.id)}>Delete</Button>
               </Box>
             </Box>
           ))
