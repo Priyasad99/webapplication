@@ -1,5 +1,5 @@
 import { Button, Box, Typography, CircularProgress, DialogTitle, Dialog, DialogContent, DialogActions } from '@mui/material';
-import { useGetPostsQuery,useDeletePostMutation } from '../../redux/servicess/api';
+import { useGetPostsQuery, useDeletePostMutation } from '../../redux/servicess/api';
 import { useState } from 'react';
 import PostForm from '../posts/PostForm';
 import type { Post } from '../../types';
@@ -67,10 +67,22 @@ const PostList = () => {
       >
         {posts.length > 0 ? (
           posts.map((post: Post) => (
-            <Box key={post.id} sx={{ padding: 2, border: '1px solid #ddd', borderRadius: 2 }}>
+            <Box
+              key={post.id}
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between', // Ensures the buttons are spaced at the bottom
+                height: '100%', // Ensures the card takes up full height of the container
+                padding: 2,
+                border: '1px solid #ddd',
+                borderRadius: 2,
+              }}
+            >
               <Typography variant="h6" gutterBottom>{post.title}</Typography>
               <Typography variant="body2" color="textSecondary">{post.body}</Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+              {/* Add this flexbox container for the buttons */}
+              <Box sx={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between' }}>
                 <Button variant="outlined" onClick={() => handleEditPostClick(post)}>Edit</Button>
                 <Button variant="outlined" color="error" onClick={() => post.id !== undefined && handleDelete(post.id)}>Delete</Button>
               </Box>
@@ -90,24 +102,20 @@ const PostList = () => {
               initialValues={editPostData}
               onSubmitSuccess={handleDialogClose}
               isEdit={true}
+              onCancel={handleDialogClose}
             />
           ) : (
             <PostForm
               initialValues={{ title: '', body: '', userId: 1 }} // Empty initial values for Create Post
               onSubmitSuccess={handleDialogClose}
               isEdit={false}
+              onCancel={handleDialogClose}
             />
           )}
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDialogClose} color="primary">
-            Cancel
-          </Button>
-        </DialogActions>
       </Dialog>
     </Box>
   );
 };
 
 export default PostList;
-
